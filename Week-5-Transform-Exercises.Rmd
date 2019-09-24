@@ -1,12 +1,16 @@
 ---
 title: "Transform Data"
+output: github_document
+#might want to change to git doc
 ---
 
 ```{r setup}
 library(tidyverse)
-# install.packages("babynames")
+#install.packages("babynames")
 library(babynames)
 babynames
+ggplot(data = babynames)+
+  geom_line(mapping =aes(x =year, y=prop))
 ```
 
 # dplyr
@@ -16,7 +20,7 @@ babynames
 Alter the code to select just the `n` column:
 
 ```{r}
-select(babynames, name, prop)
+select(babynames, n)
 ```
 
 ## Quiz
@@ -38,7 +42,8 @@ Use `filter`, `babynames`, and the logical operators to find:
 * All of the children named "Sea"  
 
 ```{r}
-
+select(babynames, n)
+filter(babynames, prop >= 0.08)
 
 ```
 
@@ -51,7 +56,11 @@ Use Boolean operators to return only the rows that contain:
 * Names that are one of Acura, Lexus, or Yugo
 
 ```{r}
-
+filter(babynames, name == "Sea")
+filter(babynames, name == "Garrett")
+filter(babynames, sex == "M" & name == "Sue")
+filter(babynames, (n == 5 | n == 6) & year == 1880)
+filter(babynames, name == "Acura" | name == "Lexus" | name == "Yugo" )
 ```
 
 ## Help Me
@@ -60,7 +69,8 @@ What is the smallest value of n?
 What is the largest?
 
 ```{r}
-
+arrange(babynames, n)
+arrange(babynames, desc(n))
 ```
 
 ## Your Turn 4
@@ -72,7 +82,10 @@ Use `%>%` to write a sequence of functions that:
 3. Arranges the results so that the most popular names are near the top.
 
 ```{r}
+filter(babynames, n == 99680)
+babynames %>% filter (n==99680)
 
+filter(babynames, year==2017) %>% select(name,n) %>% arrange()
 ```
 
 ## Your Turn 5 - Exam
